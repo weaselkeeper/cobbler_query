@@ -3,27 +3,7 @@
  Queries cobbler for information on hosts. Use hostname to iterate over all
  the systems and pull out the info for the hosts you are interested in. No
  Auth required, does not write to cobbler at all.
- 
- Mostly an excersize in using the xmlrpc inteface. But can be useful on systems
- that don't have cobbler installed. 
 
-"""
-
-LICENSE="""
-Copyright (C) 2011 Jim Richardson <weaselkeeper@gmail.com>
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License version 2 as
-published by the Free Software Foundation
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License V2
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 """
 
 import optparse
@@ -33,9 +13,9 @@ import sys
 import re
 import pprint
 import logging
+import os
 
-
-
+DEFAULT_COBBLER_SERVER = os.environ.get('COBBLER_SERVER','cobbler.yourdomain.com')
 
 def get_options():
     """ command-line options """
@@ -61,7 +41,7 @@ conjunction with the -n flag")
     calling_options, calling_args = parser.parse_args()
 
     if not calling_options.server:
-        calling_options.server = "nsi01.corp.cmates.com"
+        calling_options.server = DEFAULT_COBBLER_SERVER
 
     if not calling_options.hostname and not calling_options.glob and not calling_options.all:
         calling_options.hostname = raw_input('hostname: ')
@@ -135,5 +115,3 @@ if  __name__ == "__main__":
                 print "System %s as %s :" % (name, hostname)
                 if not options.quiet:
                     pprint.pprint(system)
-
-
