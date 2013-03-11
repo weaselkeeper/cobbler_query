@@ -20,6 +20,7 @@ def read_config():
     Override with the get_options function, and any relevant environment
     variables. """
     DEFAULT_COBBLER_SERVER = os.environ.get('COBBLER_SERVER','cobbler.yourdomain.com')
+    return DEFAULT_COBBLER_SERVER
 
 def get_options():
     """ command-line options """
@@ -45,7 +46,7 @@ conjunction with the -n flag")
     calling_options, calling_args = parser.parse_args()
 
     if not calling_options.server:
-        calling_options.server = DEFAULT_COBBLER_SERVER
+        calling_options.server = read_config()
 
     if not calling_options.hostname and not calling_options.glob and not calling_options.all:
         calling_options.hostname = raw_input('hostname: ')
