@@ -15,7 +15,11 @@ import pprint
 import logging
 import os
 
-DEFAULT_COBBLER_SERVER = os.environ.get('COBBLER_SERVER','cobbler.yourdomain.com')
+def read_config():
+    """ if a config file exists, read and parse it.
+    Override with the get_options function, and any relevant environment
+    variables. """
+    DEFAULT_COBBLER_SERVER = os.environ.get('COBBLER_SERVER','cobbler.yourdomain.com')
 
 def get_options():
     """ command-line options """
