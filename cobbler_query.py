@@ -75,11 +75,6 @@ def _get_server():
         traceback.print_exc()
         return None
 
-def _get_systems():
-    """ Get system object """
-    _server = _get_server()
-    return _server.get_systems()
-
 if  __name__ == "__main__":
 
     global_log_level = logging.WARN
@@ -113,7 +108,7 @@ if  __name__ == "__main__":
             pprint.pprint(system)
 
     else:
-        for system in _get_systems():
+        for system in server.get_systems():
             name = system['name']
             hostname = system['hostname']
             if hostname not in name and not options.quiet:
