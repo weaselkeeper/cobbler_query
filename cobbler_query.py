@@ -7,6 +7,7 @@
 """
 
 import optparse
+import ConfigParser
 import traceback
 import xmlrpclib
 import sys
@@ -16,19 +17,28 @@ import logging
 import os
 
 
+""" Set some defaults """
+
+query_config = '/etc/cobbler_query/config'
 
 def read_config():
-    pass
     """ if a config file exists, read and parse it.
     Override with the get_options function, and any relevant environment
-    variables. """
+    variables.
+    Config file is in ConfigParser format
 
-def default_server():
-    """ Default cobbler server can be set via environment variable, called
-    COBBLER_SERVER, unless overridden on the command line this will be the
-    server contacted for queries. """
-    DEFAULT_COBBLER_SERVER = os.environ.get('COBBLER_SERVER','cobbler.yourdomain.com')
-    return DEFAULT_COBBLER_SERVER
+    Basically:
+
+    [sectionname]
+    key=value
+    [othersection]
+    key=value
+    """
+
+    config = ConfigParser.RawConfigParser()
+    config.read(query_config)
+    server = config.get('server','host')
+    return server
 
 def get_options():
     """ command-line options """
@@ -54,7 +64,7 @@ conjunction with the -n flag")
     calling_options, calling_args = parser.parse_args()
 
     if not calling_options.server:
-        calling_options.server = default_server()
+        calling_options.server = read_config()
 
     if not calling_options.hostname and not calling_options.glob and not calling_options.all:
         calling_options.hostname = raw_input('hostname: ')
