@@ -33,6 +33,9 @@ def read_config():
     key=value
     [othersection]
     key=value
+
+    Currently, only has one key=value pair, the default cobbler host to direct
+    the query to.
     """
 
     config = ConfigParser.RawConfigParser()
