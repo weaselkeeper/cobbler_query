@@ -110,7 +110,8 @@ if  __name__ == "__main__":
         try:
             name = system['name']
         except TypeError:
-            print "Sorry, hostname %s does not seem to exist in cobbler" % hostname
+            log.warn("Sorry, hostname %s does not seem to exist in cobbler" %
+                    hostname)
             sys.exit()
 
         if options.koan:
