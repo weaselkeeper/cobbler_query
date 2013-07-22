@@ -55,11 +55,11 @@ def get_options():
     parser.add_option("-s", "--server", action="store", type="string",
                       dest="server", help="Cobbler server.")
     parser.add_option("-g", "--glob", action="store", type="string",
-                      help="restrict actions to hosts that match regex")
+                      help="""restrict actions to hosts that match regex
+Example, ./cobbler_query.py  -g 'checkout-app0?.*prod.*'
+For all the checkout-app0[] in prod""")
     parser.add_option("-q", "--quiet", action="store_true",
                       help="just tell me what systems match -g or hostname")
-# Example, ./cobbler_query.py  -g 'checkout-app0?.*prod.*' For all the
-# checkout-app0[] in prod
     parser.add_option("-a", "--all", action="store_true",
                       help="Do for all systems cobbler knows about, use with \
                       -q, or get flooded with lots of text")
