@@ -62,10 +62,10 @@ For all the checkout-app0[] in prod""")
                       help="just tell me what systems match -g or hostname")
     parser.add_option("-a", "--all", action="store_true",
                       help="Do for all systems cobbler knows about, use with \
-                      -q, or get flooded with lots of text")
+-q, or get flooded with lots of text")
     parser.add_option("-k", "--koan", action="store_true", help="Return data \
-                      that koan would see, including expanding inheritance. \
-                      Only works in conjunction with the n flag")
+that koan would see, including expanding inheritance. \
+Only works in conjunction with the n flag")
     parser.add_option("-v", "--verbose", action="store_true",
                       help="Extra info about stuff")
     parser.add_option("-d", "--debug", action="store_true",
