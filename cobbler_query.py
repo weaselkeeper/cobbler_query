@@ -14,7 +14,6 @@ import sys
 import re
 import pprint
 import logging
-import os
 
 
 """ Set some defaults """
@@ -62,10 +61,10 @@ def get_options():
 # Example, ./cobbler_query.py  -g 'checkout-app0?.*prod.*' For all the
 # checkout-app0[] in prod
     parser.add_option("-a", "--all", action="store_true",
-                      help="Do for all systems cobbler knows about, use with
+                      help="Do for all systems cobbler knows about, use with \
                       -q, or get flooded with lots of text")
-    parser.add_option("-k", "--koan", action="store_true", help="Return data
-                      that koan would see, including expanding inheritance.
+    parser.add_option("-k", "--koan", action="store_true", help="Return data \
+                      that koan would see, including expanding inheritance. \
                       Only works in conjunction with the n flag")
     parser.add_option("-v", "--verbose", action="store_true",
                       help="Extra info about stuff")
