@@ -88,7 +88,7 @@ clean:
 	@cd $(BASEDIR) && rm -rf BUILD_TEMP && rm -f AUTHORS.TXT $(NAME)-$(VERSION)*.tar.bz2
 	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
 	@rm -rf noarch
-	@rm $(NAME)*rpm
+	@rm -f $(NAME)*rpm
 
 bleach: clean
 	@/bin/rm -f $(NAME)-$(VERSION)*rpm*
