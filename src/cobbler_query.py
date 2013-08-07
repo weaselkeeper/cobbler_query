@@ -18,7 +18,7 @@ import logging
 
 """ Set some defaults """
 
-query_config = '/etc/cobbler_query/config'
+CONFIGFILE = '/etc/cobbler_query/config'
 
 
 def read_config():
@@ -39,7 +39,7 @@ def read_config():
     """
 
     config = ConfigParser.RawConfigParser()
-    config.read(query_config)
+    config.read(CONFIGFILE)
     server = config.get('server', 'host')
     return server
 
