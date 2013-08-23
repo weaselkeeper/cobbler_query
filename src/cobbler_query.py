@@ -7,7 +7,7 @@
 """
 
 import optparse
-import ConfigParser
+from ConfigParser import SafeConfigParser
 import traceback
 import xmlrpclib
 import sys
@@ -38,7 +38,7 @@ def read_config():
     the query to.
     """
 
-    config = ConfigParser.RawConfigParser()
+    config = SafeConfigParser()
     config.read(CONFIGFILE)
     server = config.get('server', 'host')
     return server
