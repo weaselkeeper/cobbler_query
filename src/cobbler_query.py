@@ -49,25 +49,25 @@ def get_options():
     parser = argparse.ArgumentParser(description='Pass cli options to script')
 
     parser.add_argument("-n", "--hostname", action="store",
-                      help="Hostname to query for.")
+                        help="Hostname to query for.")
     parser.add_argument("-s", "--server", action="store",
-                      dest="server", help="Cobbler server.")
+                        dest="server", help="Cobbler server.")
     parser.add_argument("-g", "--glob", action="store",
-                      help="""restrict actions to hosts that match regex
+                        help="""restrict actions to hosts that match regex
 Example, ./cobbler_query.py  -g 'checkout-app0?.*prod.*'
 For all the checkout-app0[] in prod""")
     parser.add_argument("-q", "--quiet", action="store_true",
-                      help="just tell me what systems match -g or hostname")
+                        help="just tell me what systems match -g or hostname")
     parser.add_argument("-a", "--all", action="store_true",
-                      help="Do for all systems cobbler knows about, use with \
+                        help="Do for all systems cobbler knows about, use with \
 -q, or get flooded with lots of text")
     parser.add_argument("-k", "--koan", action="store_true", help="Return data \
 that koan would see, including expanding inheritance. \
 Only works in conjunction with the n flag")
     parser.add_argument("-v", "--verbose", action="store_true",
-                      help="Extra info about stuff")
+                        help="Extra info about stuff")
     parser.add_argument("-d", "--debug", action="store_true",
-                      help="Set logging level to debug")
+                        help="Set logging level to debug")
 
     args = parser.parse_args()
 
