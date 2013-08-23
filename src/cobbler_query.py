@@ -6,7 +6,7 @@
 
 """
 
-import optparse
+import argparse
 from ConfigParser import SafeConfigParser
 import traceback
 import xmlrpclib
@@ -46,48 +46,49 @@ def read_config():
 
 def get_options():
     """ command-line options """
-    usage = "usage: %prog [options]"
-    optionparser = optparse.OptionParser
-    parser = optionparser(usage)
+    parser = argparse.ArgumentParser(description='Pass cli options to script')
 
-    parser.add_option("-n", "--hostname", action="store", type="string",
+    parser.add_argument("-n", "--hostname", action="store",
                       help="Hostname to query for.")
-    parser.add_option("-s", "--server", action="store", type="string",
+    parser.add_argument("-s", "--server", action="store",
                       dest="server", help="Cobbler server.")
-    parser.add_option("-g", "--glob", action="store", type="string",
+    parser.add_argument("-g", "--glob", action="store",
                       help="""restrict actions to hosts that match regex
 Example, ./cobbler_query.py  -g 'checkout-app0?.*prod.*'
 For all the checkout-app0[] in prod""")
-    parser.add_option("-q", "--quiet", action="store_true",
+    parser.add_argument("-q", "--quiet", action="store_true",
                       help="just tell me what systems match -g or hostname")
-    parser.add_option("-a", "--all", action="store_true",
+    parser.add_argument("-a", "--all", action="store_true",
                       help="Do for all systems cobbler knows about, use with \
 -q, or get flooded with lots of text")
-    parser.add_option("-k", "--koan", action="store_true", help="Return data \
+    parser.add_argument("-k", "--koan", action="store_true", help="Return data \
 that koan would see, including expanding inheritance. \
 Only works in conjunction with the n flag")
-    parser.add_option("-v", "--verbose", action="store_true",
+    parser.add_argument("-v", "--verbose", action="store_true",
                       help="Extra info about stuff")
-    parser.add_option("-d", "--debug", action="store_true",
+    parser.add_argument("-d", "--debug", action="store_true",
                       help="Set logging level to debug")
-    calling_options, calling_args = parser.parse_args()
 
-    if not calling_options.server:
-        calling_options.server = read_config()
+    args = parser.parse_args()
 
-    if not calling_options.hostname and not calling_options.glob \
-            and not calling_options.all:
-        calling_options.hostname = raw_input('hostname: ')
+    if not args.server:
+        args.server = read_config()
 
-    if calling_options.debug:
+    if not args.hostname and not args.glob \
+            and not args.all:
+        args.hostname = raw_input('hostname: ')
+
+    if args.debug:
         log.setLevel(logging.DEBUG)
 
-    return calling_options, calling_args
+    args.usage = "usage: %prog [options]"
+
+    return args
 
 
 def _get_server():
     """ getting the server object """
-    url = "http://%s/cobbler_api" % options.server
+    url = "http://%s/cobbler_api" % args.server
     try:
         _server = xmlrpclib.Server(url)
         return _server
@@ -107,11 +108,11 @@ if __name__ == "__main__":
     log.setLevel(global_log_level)
     log.addHandler(default_log_handler)
     log.debug("Starting logging")
-    options, args = get_options()
+    args = get_options()
     server = _get_server()
-    if options.hostname:
+    if args.hostname:
         # Only doing one system
-        hostname = options.hostname
+        hostname = args.hostname
         system = server.get_item('system', hostname)
         try:
             name = system['name']
@@ -120,27 +121,27 @@ if __name__ == "__main__":
                      hostname)
             sys.exit()
 
-        if options.koan:
+        if args.koan:
             system = server.get_system_for_koan(hostname)
 
         print "System %s as %s:" % (name, hostname)
-        if not options.quiet:
+        if not args.quiet:
             pprint.pprint(system)
 
     else:
         for system in server.get_systems():
             name = system['name']
             hostname = system['hostname']
-            if hostname not in name and not options.quiet:
+            if hostname not in name and not args.quiet:
                 log.warn("hostname <-> name problem with system name %s"
                          % name)
-            if options.glob:
-                glob = options.glob
+            if args.glob:
+                glob = args.glob
                 if re.search(glob, name):
                     print "System %s as %s :" % (name, hostname)
-                    if not options.quiet:
+                    if not args.quiet:
                         pprint.pprint(system)
             else:
                 print "System %s as %s :" % (name, hostname)
-                if not options.quiet:
+                if not args.quiet:
                     pprint.pprint(system)
