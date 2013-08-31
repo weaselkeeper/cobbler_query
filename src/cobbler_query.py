@@ -21,7 +21,7 @@ import logging
 CONFIGFILE = '/etc/cobbler_query/config'
 
 
-def read_config():
+def read_config(args):
     """ if a config file exists, read and parse it.
     Override with the get_options function, and any relevant environment
     variables.
@@ -39,7 +39,7 @@ def read_config():
     """
 
     config = SafeConfigParser()
-    config.read(CONFIGFILE)
+    config.read(args.config)
     server = config.get('server', 'host')
     return server
 
@@ -68,11 +68,15 @@ Only works in conjunction with the n flag")
                         help="Extra info about stuff")
     parser.add_argument("-d", "--debug", action="store_true",
                         help="Set logging level to debug")
+    parser.add_argument("-c", "--config", action="store", help="config file")
 
     args = parser.parse_args()
 
+    if not args.config:
+        args.config = CONFIGFILE
+
     if not args.server:
-        args.server = read_config()
+        args.server = read_config(args)
 
     if not args.hostname and not args.glob \
             and not args.all:
