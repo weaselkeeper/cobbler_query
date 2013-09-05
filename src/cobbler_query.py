@@ -21,6 +21,58 @@ import logging
 CONFIGFILE = '/etc/cobbler_query/config'
 
 
+def run(options={}):
+    """ Main loop, called via .run method, or via __main__ section """
+
+    global_log_level = logging.WARN
+    default_log_format = logging.Formatter("%(asctime)s - %(levelname)s - \
+                                           %(message)s")
+    default_log_handler = logging.StreamHandler(sys.stderr)
+    default_log_handler.setFormatter(default_log_format)
+
+    log = logging.getLogger("cobbler_query")
+    log.setLevel(global_log_level)
+    log.addHandler(default_log_handler)
+    log.debug("Starting logging")
+    args = get_options()
+    server = _get_server(args)
+    if args.hostname:
+        # Only doing one system
+        hostname = args.hostname
+        system = server.get_item('system', hostname)
+        try:
+            name = system['name']
+        except TypeError:
+            log.warn("Sorry, hostname %s does not seem to exist in cobbler" %
+                     hostname)
+            sys.exit()
+
+        if args.koan:
+            system = server.get_system_for_koan(hostname)
+
+        print "System %s as %s:" % (name, hostname)
+        if not args.quiet:
+            pprint.pprint(system)
+
+    else:
+        for system in server.get_systems():
+            name = system['name']
+            hostname = system['hostname']
+            if hostname not in name and not args.quiet:
+                log.warn("hostname <-> name problem with system name %s"
+                         % name)
+            if args.glob:
+                glob = args.glob
+                if re.search(glob, name):
+                    print "System %s as %s :" % (name, hostname)
+                    if not args.quiet:
+                        pprint.pprint(system)
+            else:
+                print "System %s as %s :" % (name, hostname)
+                if not args.quiet:
+                    pprint.pprint(system)
+
+
 def read_config(args):
     """ if a config file exists, read and parse it.
     Override with the get_options function, and any relevant environment
@@ -90,7 +142,7 @@ Only works in conjunction with the n flag")
     return args
 
 
-def _get_server():
+def _get_server(args):
     """ getting the server object """
     url = "http://%s/cobbler_api" % args.server
     try:
@@ -101,51 +153,4 @@ def _get_server():
         return None
 
 if __name__ == "__main__":
-
-    global_log_level = logging.WARN
-    default_log_format = logging.Formatter("%(asctime)s - %(levelname)s - \
-                                           %(message)s")
-    default_log_handler = logging.StreamHandler(sys.stderr)
-    default_log_handler.setFormatter(default_log_format)
-
-    log = logging.getLogger("cobbler_query")
-    log.setLevel(global_log_level)
-    log.addHandler(default_log_handler)
-    log.debug("Starting logging")
-    args = get_options()
-    server = _get_server()
-    if args.hostname:
-        # Only doing one system
-        hostname = args.hostname
-        system = server.get_item('system', hostname)
-        try:
-            name = system['name']
-        except TypeError:
-            log.warn("Sorry, hostname %s does not seem to exist in cobbler" %
-                     hostname)
-            sys.exit()
-
-        if args.koan:
-            system = server.get_system_for_koan(hostname)
-
-        print "System %s as %s:" % (name, hostname)
-        if not args.quiet:
-            pprint.pprint(system)
-
-    else:
-        for system in server.get_systems():
-            name = system['name']
-            hostname = system['hostname']
-            if hostname not in name and not args.quiet:
-                log.warn("hostname <-> name problem with system name %s"
-                         % name)
-            if args.glob:
-                glob = args.glob
-                if re.search(glob, name):
-                    print "System %s as %s :" % (name, hostname)
-                    if not args.quiet:
-                        pprint.pprint(system)
-            else:
-                print "System %s as %s :" % (name, hostname)
-                if not args.quiet:
-                    pprint.pprint(system)
+    run()
