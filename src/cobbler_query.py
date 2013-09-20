@@ -21,19 +21,19 @@ import logging
 CONFIGFILE = '/etc/cobbler_query/config'
 
 
-def run(options={}):
+global_log_level = logging.WARN
+default_log_format = logging.Formatter("%(asctime)s - %(levelname)s - \
+                                       %(message)s")
+default_log_handler = logging.StreamHandler(sys.stderr)
+default_log_handler.setFormatter(default_log_format)
+
+log = logging.getLogger("cobbler_query")
+log.setLevel(global_log_level)
+log.addHandler(default_log_handler)
+log.debug("Starting logging")
+
+def run():
     """ Main loop, called via .run method, or via __main__ section """
-
-    global_log_level = logging.WARN
-    default_log_format = logging.Formatter("%(asctime)s - %(levelname)s - \
-                                           %(message)s")
-    default_log_handler = logging.StreamHandler(sys.stderr)
-    default_log_handler.setFormatter(default_log_format)
-
-    log = logging.getLogger("cobbler_query")
-    log.setLevel(global_log_level)
-    log.addHandler(default_log_handler)
-    log.debug("Starting logging")
     args = get_options()
     server = _get_server(args)
     if args.hostname:
