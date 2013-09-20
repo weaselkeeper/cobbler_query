@@ -94,8 +94,8 @@ def read_config(args):
         config.read(args.config)
         server = config.get('server', 'host')
     except:
-        log.warn('Something went wrong with config parsing, bad or no config
-        file?  Try passing a config file as an option via the -c flag')
+        log.warn('Something went wrong with config parsing, bad or no config\
+                file?  Try passing a config file as an option via the -c flag')
         sys.exit(1)
     return server
 
