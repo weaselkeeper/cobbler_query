@@ -89,10 +89,13 @@ def read_config(args):
     Currently, only has one key=value pair, the default cobbler host to direct
     the query to.
     """
-
-    config = SafeConfigParser()
-    config.read(args.config)
-    server = config.get('server', 'host')
+    try:
+        config = SafeConfigParser()
+        config.read(args.config)
+        server = config.get('server', 'host')
+    except:
+        log.warn('Something went wrong with config parsing, bad or no config file?')
+        sys.exit(1)
     return server
 
 
