@@ -24,7 +24,7 @@ rm -rf %{buildroot}
 %{__mkdir_p} %{buildroot}%{_sysconfdir}/%{name}
 %{__mkdir_p} %{buildroot}%{_localstatedir}/log/%{name}
 cp -r ./*.py %{buildroot}%{_bindir}/
-#cp -r ./config/* %{buildroot}%{_sysconfdir}/%{name}
+cp -r ./*.conf %{buildroot}%{_sysconfdir}/%{name}
 
 %files
 %{_bindir}/*.py

@@ -18,7 +18,7 @@ import logging
 
 """ Set some defaults """
 
-CONFIGFILE = '/etc/cobbler_query/config'
+CONFIGFILE = '/etc/cobbler_query/cobbler_query.conf'
 
 
 global_log_level = logging.WARN

@@ -71,7 +71,7 @@ all: srpm
 sources:
 	mkdir $(NAME)
 	cp -r src/* $(NAME)
-	#cp -r conf/* $(NAME)
+	cp -r conf/* $(NAME)
 	mkdir -p $(SOURCEDIR)
 	mkdir -p $(WORKDIR)
 	/bin/tar -jcf $(SOURCEDIR)/$(TARSRC).tar.bz2 $(NAME)
