@@ -1,6 +1,6 @@
 # Makefile is a confused mess.  Needs significant cleanup
 NAME = cobbler_query
-VERSION=0.1
+VERSION=0.2
 RELEASE=0
 SHELL := /bin/bash
 SPECFILE = $(firstword $(wildcard *.spec))
