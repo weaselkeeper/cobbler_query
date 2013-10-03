@@ -1,5 +1,5 @@
 Name:           cobbler_query
-Version:        0.1
+Version:        0.2
 Release:        0
 Summary:        Query a cobbler server over xmlrpc
 License:        GPLv2
@@ -38,5 +38,7 @@ cp -r ./*.py %{buildroot}%{_bindir}/
 rm -rf %{buildroot}
 
 %changelog
+* Thu Oct 03 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.2
+- Adding a config file
 * Sat Jul 27 2013 Jim Richardson <weaselkeeper@gmail.com> - 0.1
 - Initial RPM build structure added.

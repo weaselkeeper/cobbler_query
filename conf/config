@@ -1,0 +1,5 @@
+# Config file for cobbler_query.  Not much to it yet
+
+[server]
+host = your.cobbler.server.fqdn
+
