@@ -28,7 +28,7 @@ cp -r ./*.py %{buildroot}%{_bindir}/
 
 %files
 %{_bindir}/*.py
-#%{_sysconfdir}/%{name}/*
+%{_sysconfdir}/%{name}/*
 
 %pre
 
