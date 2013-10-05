@@ -39,12 +39,14 @@ def run():
     if args.hostname:
         # Only doing one system
         hostname = args.hostname
-        system = server.get_item('system', hostname)
         try:
+            system = server.get_item('system', hostname)
             name = system['name']
-        except TypeError:
-            log.warn("Sorry, hostname %s does not seem to exist in cobbler" %
-                     hostname)
+        except TypeError as error:
+            log.warn('Couldn\'t fetch %s due to "%s"' % (hostname, error))
+            sys.exit()
+        except Exception as error:
+            log.warn('trying to extract hostname failed with error "%s"' % error)
             sys.exit()
 
         if args.koan:
@@ -93,9 +95,8 @@ def read_config(args):
         config = SafeConfigParser()
         config.read(args.config)
         server = config.get('server', 'host')
-    except:
-        log.warn('Something went wrong with config parsing, bad or no config\
-                file?  Try passing a config file as an option via the -c flag')
+    except Exception as error:
+        log.warn('Something went wrong, python says "%s"' % error)
         sys.exit(1)
     return server
 
@@ -152,7 +153,8 @@ def _get_server(args):
     try:
         _server = xmlrpclib.Server(url)
         return _server
-    except:
+    except Exception as error:
+        log.warn('Something went wrong with _get_server, python reports %s' % error)
         traceback.print_exc()
         return None
 
