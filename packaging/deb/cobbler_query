@@ -1,0 +1,24 @@
+### Commented entries have reasonable defaults.
+### Uncomment to edit them.
+# Source: <source package name; defaults to package name>
+Section: misc
+Priority: optional
+Homepage: https://github.com/weaselkeeper/cobbler_query
+Standards-Version: 3.9.2
+
+Package: cobbler_query
+Version: 0.2
+Maintainer: Jim Richardson <weaselkeeper@gmail.com>
+Depends: python
+Architecture: all
+Copyright: LICENSE
+# Changelog: <changelog file; defaults to a generic changelog>
+Readme: README.md
+Files: cobbler_query.conf /etc/cobbler_query
+ cobbler_query.py /usr/bin
+
+Description: Query a cobbler server for info.
+ .
+usage: cobbler_query.py [-h] [-n HOSTNAME] [-s SERVER] [-g GLOB] [-q] [-a]
+                        [-k] [-v] [-d] [-c CONFIG]
+
