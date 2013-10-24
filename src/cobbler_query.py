@@ -40,12 +40,12 @@ log.debug("Starting logging")
 def run():
     """ Main loop, called via .run method, or via __main__ section """
     args = get_options()
-    server = _get_server(args)
+    conn = _get_server(args)
     if args.hostname:
         # Only doing one system
         hostname = args.hostname
         try:
-            system = server.get_item('system', hostname)
+            system = conn.get_item('system', hostname)
             name = system['name']
         except TypeError as error:
             log.warn('Couldn\'t fetch %s due to "%s"' % (hostname, error))
@@ -55,14 +55,14 @@ def run():
             sys.exit()
 
         if args.koan:
-            system = server.get_system_for_koan(hostname)
+            system = conn.get_system_for_koan(hostname)
 
         print "System %s as %s:" % (name, hostname)
         if not args.quiet:
             pprint.pprint(system)
 
     else:
-        for system in server.get_systems():
+        for system in conn.get_systems():
             name = system['name']
             hostname = system['hostname']
             if hostname not in name and not args.quiet:
@@ -158,8 +158,8 @@ def _get_server(args):
     """ getting the server object """
     url = "http://%s/cobbler_api" % args.server
     try:
-        _server = xmlrpclib.Server(url)
-        return _server
+        conn = xmlrpclib.Server(url)
+        return conn
     except Exception as error:
         log.warn('Something went wrong with _get_server, python reports %s' % error)
         traceback.print_exc()
