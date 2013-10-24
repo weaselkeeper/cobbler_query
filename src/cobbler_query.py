@@ -15,6 +15,11 @@ import re
 import pprint
 import logging
 
+try:
+    import json
+except:
+    import simplejson as json
+
 
 """ Set some defaults """
 
@@ -126,6 +131,8 @@ Only works in conjunction with the n flag")
     parser.add_argument("-d", "--debug", action="store_true",
                         help="Set logging level to debug")
     parser.add_argument("-c", "--config", action="store", help="config file")
+
+    parser.add_argument('-l', '--list', action='store_true', help='List all hosts')
 
     args = parser.parse_args()
 
