@@ -41,6 +41,14 @@ def run():
     """ Main loop, called via .run method, or via __main__ section """
     args = get_options()
     conn = _get_server(args)
+    if args.list_all:
+        # just list all hosts and then exit
+        systems = conn.get_item_names('system')
+        for system in systems:
+            print system
+        log.debug('listed all systems, now exiting')
+        sys.exit(0)
+
     if args.hostname:
         # Only doing one system
         hostname = args.hostname
@@ -132,7 +140,7 @@ Only works in conjunction with the n flag")
                         help="Set logging level to debug")
     parser.add_argument("-c", "--config", action="store", help="config file")
 
-    parser.add_argument('-l', '--list', action='store_true', help='List all hosts')
+    parser.add_argument('-l', '--list_all', action='store_true', help='List all hosts')
 
     args = parser.parse_args()
 
@@ -142,7 +150,7 @@ Only works in conjunction with the n flag")
     if not args.server:
         args.server = read_config(args)
 
-    if not args.hostname and not args.glob \
+    if not args.hostname and not args.glob and not args.list_all\
             and not args.all:
         args.hostname = raw_input('hostname: ')
 
@@ -158,7 +166,7 @@ def _get_server(args):
     """ getting the server object """
     url = "http://%s/cobbler_api" % args.server
     try:
-        conn = xmlrpclib.Server(url)
+        conn = xmlrpclib.Server(url, allow_none=True)
         return conn
     except Exception as error:
         log.warn('Something went wrong with _get_server, python reports %s' % error)
