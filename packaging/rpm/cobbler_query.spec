@@ -1,5 +1,5 @@
 Name:           cobbler_query
-Version:        0.2
+Version:        %(git describe | sed -e 's/-/_/g')
 Release:        0
 Summary:        Query a cobbler server over xmlrpc
 License:        GPLv2

@@ -1,6 +1,6 @@
 # Makefile is a confused mess.  Needs significant cleanup
 NAME = cobbler_query
-VERSION=0.2
+VERSION=$(shell git describe | sed -e 's/-/_/g')
 RELEASE=0
 SHELL := /bin/bash
 SPECFILE = $(firstword $(wildcard *.spec))
@@ -8,9 +8,9 @@ WORKDIR := $(shell pwd)/work
 SRCRPMDIR ?= $(shell pwd)
 SPECFILE = packaging/rpm/${NAME}.spec
 
-DEBFULLNAME=Jim Richardson
-DEBEMAIL=weaselkeeper@gmail.com
-SOURCE_URL=https://github.com/weaselkeeper/cobbler_query.git
+DEBFULLNAME=$(shell git config --get user.name)
+DEBMAIL=$(shell git config --get user.email)
+SOURCE_URL=$(shell git config --get remote.origin.url)
 BASEDIR := $(shell git rev-parse --show-toplevel)
 
 BUILDDIR ?= $(WORKDIR)
