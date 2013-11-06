@@ -111,14 +111,3 @@ help:
 	@echo "	rpm			Create rpm"
 	@echo "	clean			Remove work dir"
 
-
-###########
-## Build packages
-
-
-#rpm: common
-#	cd $(BASEDIR) && mkdir -p BUILD_TEMP/rpm
-#	cd BUILD_TEMP/rpm
-#	git archive HEAD --format tar.gz --output $(NAME)-$(VERSION)_$(RELEASE).tar.gz
-
-
