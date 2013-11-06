@@ -60,12 +60,15 @@ deb: common
 	cp src/* LICENSE conf/* README.md packaging/deb
 	cd $(BASEDIR)/packaging/deb && equivs-build $(NAME)
 
-
 # Redhat related
-build-srpm:
+spec:
+	m4 -DVERSION=$(VERSION)  packaging/rpm/i$(NAME).spec.in > packaging/rpm/$(NAME).spec
+
+
+build-srpm: spec
 	$(RPM) -bs $(RPM_DEFINES) $(SPECFILE)
 
-build-rpm:
+build-rpm: spec
 	$(RPM) -bb $(RPM_DEFINES) $(SPECFILE)
 
 all: srpm
@@ -91,6 +94,7 @@ clean:
 	@find $(BASEDIR) -iname *.py[co] | xargs -i rm -f {}
 	@rm -rf noarch
 	@rm -f $(NAME)*rpm
+	@rm -f packaging/rpm/$(NAME).spec
 	@rm -f packaging/deb/*py packaging/deb/*conf packaging/deb/LICENSE packaging/deb/README.md packaging/deb/*.deb
 
 bleach: clean
