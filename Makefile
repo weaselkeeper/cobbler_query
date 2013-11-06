@@ -22,20 +22,20 @@ RPM_DEFINES := --define "_sourcedir $(SOURCEDIR)" \
 		--define "_srcrpmdir $(SRCRPMDIR)" \
 		--define "_rpmdir $(RPMDIR)" \
 
-VER_REL := $(shell rpm $(RPM_DEFINES) -q --qf "%{VERSION} %{RELEASE}\n" --specfile $(SPECFILE)| head -1)
-
-ifndef VERSION
-	VERSION := $(word 1, $(VER_REL))
-endif
-ifndef RELEASE
-	RELEASE := $(word 2, $(VER_REL))
-endif
-ifndef RPM
-	RPM := rpmbuild
-endif
-ifndef RPM_WITH_DIRS
-	RPM_WITH_DIRS = $(RPM) $(RPM_DEFINES)
-endif
+#VER_REL := $(shell rpm $(RPM_DEFINES) -q --qf "%{VERSION} %{RELEASE}\n" --specfile $(SPECFILE)| head -1)
+#
+#ifndef VERSION
+#	VERSION := $(word 1, $(VER_REL))
+#endif
+#ifndef RELEASE
+#	RELEASE := $(word 2, $(VER_REL))
+#endif
+#ifndef RPM
+#	RPM := rpmbuild
+#endif
+#ifndef RPM_WITH_DIRS
+#	RPM_WITH_DIRS = $(RPM) $(RPM_DEFINES)
+#endif
 
 TARSRC = $(NAME)-$(VERSION)
 
