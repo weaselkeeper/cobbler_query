@@ -7,7 +7,7 @@ Homepage: https://github.com/weaselkeeper/cobbler_query
 Standards-Version: 3.9.2
 
 Package: cobbler-query
-Version: 0.2
+Version: VERSION
 Maintainer: Jim Richardson <weaselkeeper@gmail.com>
 Depends: python
 Architecture: all
