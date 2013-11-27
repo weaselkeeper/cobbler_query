@@ -39,6 +39,7 @@ log.debug("Starting logging")
 
 def run():
     """ Main loop, called via .run method, or via __main__ section """
+    log.debug('entring run()')
     args = get_options()
     conn = _get_server(args)
     if args.list_all:
@@ -86,7 +87,7 @@ def run():
                 print "System %s as %s :" % (name, hostname)
                 if not args.quiet:
                     pprint.pprint(system)
-
+    log.debug('leaving run()')
 
 def read_config(args):
     """ if a config file exists, read and parse it.
@@ -104,6 +105,7 @@ def read_config(args):
     Currently, only has one key=value pair, the default cobbler host to direct
     the query to.
     """
+    log.debug('entering read_config()')
     try:
         config = SafeConfigParser()
         config.read(args.config)
@@ -111,6 +113,7 @@ def read_config(args):
     except Exception as error:
         log.warn('Something went wrong, python says "%s"' % error)
         sys.exit(1)
+    log.debug('leaving read_config()')
     return server
 
 
@@ -164,6 +167,7 @@ Only works in conjunction with the n flag")
 
 def _get_server(args):
     """ getting the server object """
+    log.debug('entering _get_server()')
     url = "http://%s/cobbler_api" % args.server
     try:
         conn = xmlrpclib.Server(url, allow_none=True)
@@ -172,6 +176,7 @@ def _get_server(args):
         log.warn('Something went wrong with _get_server, python reports %s' % error)
         traceback.print_exc()
         return None
+    log.debug('leaving _get_server()')
 
 if __name__ == "__main__":
     run()
