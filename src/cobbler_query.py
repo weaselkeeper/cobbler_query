@@ -14,6 +14,7 @@ import sys
 import re
 import pprint
 import logging
+import getpass
 
 try:
     import json
@@ -145,7 +146,21 @@ Only works in conjunction with the n flag")
 
     parser.add_argument('-l', '--list_all', action='store_true', help='List all hosts')
 
+    parser.add_argument('-z', '--auth', action='store_true', help='ask for authentication data')
+
+    parser.add_argument('-u', '--user', action='store', help='username')
+
+    parser.add_argument('-p', '--pass', dest='passwd',  action='store', help='password. Better to not pass in options, but the option exists')
+
     args = parser.parse_args()
+
+    # Adding username/pass args because we will be using these in the future
+    # for making changes rather than just reading data. But not needed yet.
+    if args.auth:
+        if not args.user:
+            args.user = getpass.getuser()
+        if not args.passwd:
+            args.passwd = getpass.getpass()
 
     if not args.config:
         args.config = CONFIGFILE
