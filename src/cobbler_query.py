@@ -18,11 +18,11 @@ import getpass
 
 try:
     import json
-except:
+except ImportError:
     import simplejson as json
 
 
-""" Set some defaults """
+# Set some sane defaults
 
 CONFIGFILE = '/etc/cobbler_query/cobbler_query.conf'
 
