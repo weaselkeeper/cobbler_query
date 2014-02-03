@@ -58,10 +58,10 @@ def run():
             system = conn.get_item('system', hostname)
             name = system['name']
         except TypeError as error:
-            log.warn('Couldn\'t fetch %s due to "%s"' % (hostname, error))
+            log.warn('Couldn\'t fetch %s due to "%s"', hostname, error)
             sys.exit()
         except Exception as error:
-            log.warn('trying to extract hostname failed with error "%s"' % error)
+            log.warn('extracting hostname failed with error "%s"', error)
             sys.exit()
 
         if args.koan:
@@ -144,13 +144,16 @@ Only works in conjunction with the n flag")
                         help="Set logging level to debug")
     parser.add_argument("-c", "--config", action="store", help="config file")
 
-    parser.add_argument('-l', '--list_all', action='store_true', help='List all hosts')
+    parser.add_argument('-l', '--list_all', action='store_true',
+                        help='List all hosts')
 
-    parser.add_argument('-z', '--auth', action='store_true', help='ask for authentication data')
+    parser.add_argument('-z', '--auth', action='store_true',
+                        help='ask for authentication data')
 
     parser.add_argument('-u', '--user', action='store', help='username')
 
-    parser.add_argument('-p', '--pass', dest='passwd',  action='store', help='password. Better to not pass in options, but the option exists')
+    parser.add_argument('-p', '--pass', dest='passwd', action='store',
+                        help='password')
 
     args = parser.parse_args()
 
@@ -188,7 +191,7 @@ def _get_server(args):
         conn = xmlrpclib.Server(url, allow_none=True)
         return conn
     except Exception as error:
-        log.warn('Something went wrong with _get_server, python reports %s' % error)
+        log.warn('Error in _get_server, python reports %s', error)
         traceback.print_exc()
         return None
     log.debug('leaving _get_server()')
