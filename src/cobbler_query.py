@@ -76,8 +76,8 @@ def run():
             name = system['name']
             hostname = system['hostname']
             if hostname not in name and not args.quiet:
-                log.warn("hostname <-> name problem with system name %s"
-                         % name)
+                log.warn("hostname <-> name problem with system name %s",
+                          name)
             if args.glob:
                 glob = args.glob
                 if re.search(glob, name):
@@ -112,7 +112,7 @@ def read_config(args):
         config.read(args.config)
         server = config.get('server', 'host')
     except Exception as error:
-        log.warn('Something went wrong, python says "%s"' % error)
+        log.warn('Something went wrong, python says "%s"', error)
         sys.exit(1)
     log.debug('leaving read_config()')
     return server
