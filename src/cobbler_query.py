@@ -197,4 +197,4 @@ def _get_server(args):
     log.debug('leaving _get_server()')
 
 if __name__ == "__main__":
-    run()
+    sys.exit(run())
