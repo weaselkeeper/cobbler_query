@@ -16,11 +16,6 @@ import pprint
 import logging
 import getpass
 
-try:
-    import json
-except ImportError:
-    import simplejson as json
-
 
 # Set some sane defaults
 
