@@ -33,6 +33,16 @@ log.setLevel(global_log_level)
 log.addHandler(default_log_handler)
 log.debug("Starting logging")
 
+
+def getall(conn):
+    """ List all systems known """
+    systems = conn.get_item_names('system')
+    for system in systems:
+        print system
+    log.debug('listed all systems, now exiting')
+    sys.exit(0)
+
+
 def run():
     """ Main loop, called via .run method, or via __main__ section """
     log.debug('entring run()')
@@ -40,11 +50,7 @@ def run():
     conn = _get_server(args)
     if args.list_all:
         # just list all hosts and then exit
-        systems = conn.get_item_names('system')
-        for system in systems:
-            print system
-        log.debug('listed all systems, now exiting')
-        sys.exit(0)
+        getall(conn)
 
     if args.hostname:
         # Only doing one system
@@ -67,23 +73,30 @@ def run():
             pprint.pprint(system)
 
     else:
-        for system in conn.get_systems():
-            name = system['name']
-            hostname = system['hostname']
-            if hostname not in name and not args.quiet:
-                log.warn("hostname <-> name problem with system name %s",
-                          name)
-            if args.glob:
-                glob = args.glob
-                if re.search(glob, name):
-                    print "System %s as %s :" % (name, hostname)
-                    if not args.quiet:
-                        pprint.pprint(system)
-            else:
+        get_systems(conn, args)
+    log.debug('leaving run()')
+
+
+def get_systems(conn, args):
+    """ print out the data for the relevant systems """
+    for system in conn.get_systems():
+        name = system['name']
+        hostname = system['hostname']
+        if hostname not in name and not args.quiet:
+            log.warn("hostname <-> name problem with system name %s",
+                        name)
+        if args.glob:
+            glob = args.glob
+            if re.search(glob, name):
                 print "System %s as %s :" % (name, hostname)
                 if not args.quiet:
                     pprint.pprint(system)
-    log.debug('leaving run()')
+        else:
+            print "System %s as %s :" % (name, hostname)
+            if not args.quiet:
+                pprint.pprint(system)
+
+
 
 def read_config(args):
     """ if a config file exists, read and parse it.
