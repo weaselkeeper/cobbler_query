@@ -37,7 +37,7 @@
 """
 
 import argparse
-from ConfigParser import SafeConfigParser
+import ConfigParser
 import traceback
 import xmlrpclib
 import sys
@@ -146,10 +146,10 @@ def read_config(args):
     """
     log.debug('entering read_config()')
     try:
-        config = SafeConfigParser()
+        config = ConfigParser.SafeConfigParser()
         config.read(args.config)
         server = config.get('server', 'host')
-    except Exception as error:
+    except (ConfigParser.NoOptionError, ConfigParser.NoSectionError) as error:
         log.warn('Something went wrong, python says "%s"', error)
         sys.exit(1)
     log.debug('leaving read_config()')
