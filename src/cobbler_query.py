@@ -113,8 +113,7 @@ def get_systems(conn, args):
         name = system['name']
         hostname = system['hostname']
         if hostname not in name and not args.quiet:
-            log.warn("hostname <-> name problem with system name %s",
-                        name)
+            log.warn("hostname <-> name problem with system name %s", name)
         if args.glob:
             glob = args.glob
             if re.search(glob, name):
@@ -125,7 +124,6 @@ def get_systems(conn, args):
             print "System %s as %s :" % (name, hostname)
             if not args.quiet:
                 pprint.pprint(system)
-
 
 
 def read_config(args):
@@ -171,9 +169,9 @@ For all the checkout-app0[] in prod""")
     parser.add_argument("-q", "--quiet", action="store_true",
                         help="just tell me what systems match -g or hostname")
     parser.add_argument("-a", "--all", action="store_true",
-                        help="Do for all systems cobbler knows about, use with \
+                        help="Do for all systems cobbler knows about, use with\
 -q, or get flooded with lots of text")
-    parser.add_argument("-k", "--koan", action="store_true", help="Return data \
+    parser.add_argument("-k", "--koan", action="store_true", help="Return data\
 that koan would see, including expanding inheritance. \
 Only works in conjunction with the n flag")
     parser.add_argument("-v", "--verbose", action="store_true",
