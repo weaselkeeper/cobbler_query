@@ -199,6 +199,7 @@ Only works in conjunction with the n flag")
         if not args.user:
             args.user = getpass.getuser()
         if not args.passwd:
+            # Remember, passwd will be stored in memory, in cleartxt.
             args.passwd = getpass.getpass()
 
     if not args.config:
