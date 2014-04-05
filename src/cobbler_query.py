@@ -73,6 +73,20 @@ def getall(conn):
     sys.exit(0)
 
 
+def get_param(conn, args):
+    """ Query cobbler for various results, profiles, etc """
+    if args.param and args.paramval:
+        query_for = args.param
+        query_val = args.paramval
+    else:
+        query_for = 'server'
+        query_val = args.hostname
+
+    query = conn.get_item(query_for, query_val)
+    print query
+    return
+
+
 def run():
     """ Main loop, called via .run method, or via __main__ section """
     log.debug('entring run()')
@@ -103,7 +117,7 @@ def run():
             pprint.pprint(system)
 
     else:
-        get_systems(conn, args)
+        get_param(conn, args)
     log.debug('leaving run()')
 
 
