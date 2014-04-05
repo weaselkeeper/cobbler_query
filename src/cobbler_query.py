@@ -116,7 +116,6 @@ def get_systems(conn, args):
         print query
         return
 
-
     else:
         for system in conn.get_systems():
             name = system['name']
@@ -199,6 +198,11 @@ Only works in conjunction with the n flag")
 
     parser.add_argument('-p', '--pass', dest='passwd', action='store',
                         help='password')
+    parser.add_argument('--param', dest='param', action='store',
+                        help='pick a parameter, requires --value also')
+
+    parser.add_argument('--value', dest='paramval', action='store',
+                        help='value of param to query for, requires --param also')
 
     args = parser.parse_args()
 
