@@ -73,20 +73,6 @@ def getall(conn):
     sys.exit(0)
 
 
-def get_param(conn, args):
-    """ Query cobbler for various results, profiles, etc """
-    if args.param and args.paramval:
-        query_for = args.param
-        query_val = args.paramval
-    else:
-        query_for = 'server'
-        query_val = args.hostname
-
-    query = conn.get_item(query_for, query_val)
-    print query
-    return
-
-
 def run():
     """ Main loop, called via .run method, or via __main__ section """
     log.debug('entring run()')
@@ -117,27 +103,36 @@ def run():
             pprint.pprint(system)
 
     else:
-        get_param(conn, args)
+        get_systems(conn, args)
     log.debug('leaving run()')
 
 
 def get_systems(conn, args):
-    """ print out the data for the relevant systems """
-    for system in conn.get_systems():
-        name = system['name']
-        hostname = system['hostname']
-        if hostname not in name and not args.quiet:
-            log.warn("hostname <-> name problem with system name %s", name)
-        if args.glob:
-            glob = args.glob
-            if re.search(glob, name):
+    """ Query cobbler for various results, profiles, etc """
+    if args.param and args.paramval:
+        query_for = args.param
+        query_val = args.paramval
+        query = conn.get_item(query_for, query_val)
+        print query
+        return
+
+
+    else:
+        for system in conn.get_systems():
+            name = system['name']
+            hostname = system['hostname']
+            if hostname not in name and not args.quiet:
+                log.warn("hostname <-> name problem with system name %s", name)
+            if args.glob:
+                glob = args.glob
+                if re.search(glob, name):
+                    print "System %s as %s :" % (name, hostname)
+                    if not args.quiet:
+                        pprint.pprint(system)
+            else:
                 print "System %s as %s :" % (name, hostname)
                 if not args.quiet:
                     pprint.pprint(system)
-        else:
-            print "System %s as %s :" % (name, hostname)
-            if not args.quiet:
-                pprint.pprint(system)
 
 
 def read_config(args):
