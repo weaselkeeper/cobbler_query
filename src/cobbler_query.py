@@ -117,6 +117,10 @@ def get_systems(conn, args):
         return
 
     else:
+        if not args.hostname and not args.glob and not args.list_all \
+                and not args.all:
+            args.hostname = raw_input('hostname: ')
+
         for system in conn.get_systems():
             name = system['name']
             hostname = system['hostname']
@@ -220,10 +224,6 @@ Only works in conjunction with the n flag")
 
     if not args.server:
         args.server = read_config(args)
-
-    if not args.hostname and not args.glob and not args.list_all\
-            and not args.all:
-        args.hostname = raw_input('hostname: ')
 
     if args.debug:
         log.setLevel(logging.DEBUG)
