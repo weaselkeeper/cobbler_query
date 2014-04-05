@@ -113,7 +113,7 @@ def get_systems(conn, args):
         query_for = args.param
         query_val = args.paramval
         query = conn.get_item(query_for, query_val)
-        print query
+        pprint.pprint(query)
         return
 
     else:
