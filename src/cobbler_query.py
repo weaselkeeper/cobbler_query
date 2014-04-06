@@ -103,11 +103,11 @@ def run():
             pprint.pprint(system)
 
     else:
-        get_systems(conn, args)
+        get_query(conn, args)
     log.debug('leaving run()')
 
 
-def get_systems(conn, args):
+def get_query(conn, args):
     """ Query cobbler for various results, profiles, etc """
     if args.param and args.paramval:
         query_for = args.param
