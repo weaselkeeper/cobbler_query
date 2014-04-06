@@ -116,7 +116,10 @@ def get_systems(conn, args):
             query = conn.get_item_names(query_for)
         else:
             query = conn.get_item(query_for, query_val)
-        pprint.pprint(query)
+        if not args.quiet:
+            print 'Cobbler knows about the following %ss \n' % query_for
+        for line in query:
+            print line
         return
 
     else:
