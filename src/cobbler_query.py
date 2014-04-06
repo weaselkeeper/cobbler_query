@@ -112,7 +112,10 @@ def get_systems(conn, args):
     if args.param and args.paramval:
         query_for = args.param
         query_val = args.paramval
-        query = conn.get_item(query_for, query_val)
+        if query_val == 'list':
+            query = conn.get_item_names(query_for)
+        else:
+            query = conn.get_item(query_for, query_val)
         pprint.pprint(query)
         return
 
