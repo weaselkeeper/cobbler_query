@@ -64,23 +64,11 @@ log.addHandler(default_log_handler)
 log.debug("Starting logging")
 
 
-def getall(conn):
-    """ List all systems known """
-    systems = conn.get_item_names('system')
-    for system in systems:
-        print system
-    log.debug('listed all systems, now exiting')
-    sys.exit(0)
-
-
 def run():
     """ Main loop, called via .run method, or via __main__ section """
     log.debug('entring run()')
     args = get_options()
     conn = _get_server(args)
-    if args.list_all:
-        # just list all hosts and then exit
-        getall(conn)
 
     if args.hostname:
         # Only doing one system
@@ -123,8 +111,7 @@ def get_query(conn, args):
         return
 
     else:
-        if not args.hostname and not args.glob and not args.list_all \
-                and not args.all:
+        if not args.hostname and not args.list_all and not args.all:
             args.hostname = raw_input('hostname: ')
 
         for system in conn.get_systems():
@@ -132,12 +119,6 @@ def get_query(conn, args):
             hostname = system['hostname']
             if hostname not in name and not args.quiet:
                 log.warn("hostname <-> name problem with system name %s", name)
-            if args.glob:
-                glob = args.glob
-                if re.search(glob, name):
-                    print "System %s as %s :" % (name, hostname)
-                    if not args.quiet:
-                        pprint.pprint(system)
             else:
                 print "System %s as %s :" % (name, hostname)
                 if not args.quiet:
@@ -186,9 +167,6 @@ Example, ./cobbler_query.py  -g 'checkout-app0?.*prod.*'
 For all the checkout-app0[] in prod""")
     parser.add_argument("-q", "--quiet", action="store_true",
                         help="just tell me what systems match -g or hostname")
-    parser.add_argument("-a", "--all", action="store_true",
-                        help="Do for all systems cobbler knows about, use with\
--q, or get flooded with lots of text")
     parser.add_argument("-k", "--koan", action="store_true", help="Return data\
 that koan would see, including expanding inheritance. \
 Only works in conjunction with the n flag")
