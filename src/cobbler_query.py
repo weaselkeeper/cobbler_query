@@ -41,7 +41,6 @@ import ConfigParser
 import traceback
 import xmlrpclib
 import sys
-import re
 import pprint
 import logging
 import getpass
