@@ -220,14 +220,9 @@ def _get_server(args):
     """ getting the server object """
     log.debug('entering _get_server()')
     url = "http://%s/cobbler_api" % args.server
-    try:
-        conn = xmlrpclib.Server(url, allow_none=True)
-        return conn
-    except Exception as error:
-        log.warn('Error in _get_server, python reports %s', error)
-        traceback.print_exc()
-        return None
+    conn = xmlrpclib.Server(url, allow_none=True)
     log.debug('leaving _get_server()')
+    return conn
 
 if __name__ == "__main__":
     sys.exit(run())
