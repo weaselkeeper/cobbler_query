@@ -38,7 +38,6 @@
 
 import argparse
 import ConfigParser
-import traceback
 import xmlrpclib
 import sys
 import pprint
@@ -61,6 +60,7 @@ log = logging.getLogger("cobbler_query")
 log.setLevel(global_log_level)
 log.addHandler(default_log_handler)
 log.debug("Starting logging")
+
 
 
 def run():
