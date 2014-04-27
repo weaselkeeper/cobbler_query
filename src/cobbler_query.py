@@ -189,7 +189,7 @@ Only works in conjunction with the n flag")
                         help='pick a parameter, requires --value also')
 
     parser.add_argument('--value', dest='paramval', action='store',
-                        help='value of param to query for, requires --param also')
+                        help='value of param to query for, requires --param')
 
     args = parser.parse_args()
 
