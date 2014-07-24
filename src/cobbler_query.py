@@ -217,7 +217,7 @@ Only works in conjunction with the n flag")
 
 
 def _get_server(args):
-    """ getting the server object """
+    """ get the server object """
     log.debug('entering _get_server()')
     url = "http://%s/cobbler_api" % args.server
     conn = xmlrpclib.Server(url, allow_none=True)
