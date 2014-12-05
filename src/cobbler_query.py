@@ -166,7 +166,7 @@ Example, ./cobbler_query.py  -g 'checkout-app0?.*prod.*'
 For all the checkout-app0[] in prod""")
     parser.add_argument("-q", "--quiet", action="store_true",
                         help="just tell me what systems match -g or hostname")
-    parser.add_argument("-k", "--koan", action="store_true", help="Return data\
+    parser.add_argument("-k", "--koan", action="store_true", help="Return data \
 that koan would see, including expanding inheritance. \
 Only works in conjunction with the n flag")
     parser.add_argument("-v", "--verbose", action="store_true",
