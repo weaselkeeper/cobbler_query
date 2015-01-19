@@ -31,6 +31,6 @@ optional arguments:
   -u USER, --user USER  username
   -p PASSWD, --pass PASSWD
                         password
-  --param PARAM         pick a parameter, requires --value also
+  --param PARAM         pass a parameter, requires --value also
   --value PARAMVAL      value of param to query for, requires --param
 
