@@ -78,9 +78,6 @@ def run():
         except TypeError as error:
             log.warn('Couldn\'t fetch %s due to "%s"', hostname, error)
             sys.exit()
-        except Exception as error:
-            log.warn('extracting hostname failed with error "%s"', error)
-            sys.exit()
 
         if args.koan:
             system = conn.get_system_for_koan(hostname)
