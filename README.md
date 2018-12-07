@@ -30,7 +30,6 @@ optional arguments:
   -q, --quiet           just tell me what systems match -g or hostname
 
   -k, --koan            Return data that koan would see, including expanding
-
                         inheritance. Only works in conjunction with the n flag
 
   -v, --verbose         Extra info about stuff
